@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/black_border"
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="5dp">
+
+    <TextView
+        android:id="@+id/shoe_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start|top"
+        android:textColor="@color/colorRed"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Name of Shoe" />
+
+    <TextView
+        android:id="@+id/shoe_item_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shoe_item_name"
+        tools:text="Size: 3" />
+
+    <TextView
+        android:id="@+id/shoe_item_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/shoe_item_size"
+        app:layout_constraintTop_toBottomOf="@id/shoe_item_name"
+        tools:text="Company: FPT" />
+</androidx.constraintlayout.widget.ConstraintLayout>

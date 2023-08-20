@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shoe_navigation"
+    app:startDestination="@id/login_screen">
+
+    <fragment
+        android:id="@+id/login_screen"
+        android:name="com.udacity.shoestore.LoginFragment"
+        android:label="@string/login_label"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_screen_to_welcome_screen"
+            app:destination="@id/welcome_screen"
+            app:popUpTo="@+id/login_screen">
+            <argument
+                android:name="user"
+                app:argType="java.io.Serializable" />
+        </action>
+
+        <action
+            android:id="@+id/action_login_screen_to_shoe_list_screen"
+            app:destination="@id/shoe_list_screen"
+            app:popUpTo="@+id/login_screen">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/welcome_screen"
+        android:name="com.udacity.shoestore.WelcomeFragment"
+        android:label="@string/welcome_label"
+        tools:layout="@layout/fragment_welcome">
+
+        <argument
+            android:name="user"
+            app:argType="java.io.Serializable" />
+
+        <action
+            android:id="@+id/action_welcome_screen_to_instructions_screen"
+            app:destination="@id/instructions_screen"
+            app:popUpTo="@+id/login_screen">
+
+            <argument
+                android:name="user"
+                app:argType="java.io.Serializable" />
+
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/instructions_screen"
+        android:name="com.udacity.shoestore.InstructionsFragment"
+        android:label="@string/instructions_label"
+        tools:layout="@layout/fragment_instructions">
+
+        <argument
+            android:name="user"
+            app:argType="java.io.Serializable" />
+
+        <action
+            android:id="@+id/action_instructions_screen_to_shoe_list_screen"
+            app:destination="@id/shoe_list_screen"
+            app:popUpTo="@id/login_screen" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/shoe_list_screen"
+        android:name="com.udacity.shoestore.ShoeListFragment"
+        android:label="@string/shoe_list_label"
+        tools:layout="@layout/fragment_shoe_list">
+
+        <action
+            android:id="@+id/action_shoe_list_screen_to_login_screen"
+            app:destination="@id/login_screen"
+            app:popUpTo="@id/login_screen"/>
+
+        <action
+            android:id="@+id/action_shoe_list_screen_to_shoe_detail_screen"
+            app:destination="@id/shoe_detail_screen"
+            app:popUpTo="@id/shoe_detail_screen">
+
+            <argument
+                android:name="shoeDetail"
+                android:defaultValue="@null"
+                app:nullable="true"
+                app:argType="java.io.Serializable" />
+
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/shoe_detail_screen"
+        android:name="com.udacity.shoestore.ShoeDetailFragment"
+        android:label="@string/shoe_detail_label"
+        tools:layout="@layout/fragment_shoe_detail">
+
+        <argument
+            android:name="shoeDetail"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="java.io.Serializable" />
+
+    </fragment>
+
+</navigation>
