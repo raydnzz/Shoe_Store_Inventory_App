@@ -2,7 +2,6 @@ package com.udacity.shoestore
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -38,7 +37,6 @@ class ShoeListFragment : Fragment(), MenuProvider {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("DuongVN", "ShoeListFragment.onCreateView ${savedInstanceState}")
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_shoe_list, container, false)
 
