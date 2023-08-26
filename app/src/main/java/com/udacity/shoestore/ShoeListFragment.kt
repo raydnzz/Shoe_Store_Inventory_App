@@ -1,6 +1,5 @@
 package com.udacity.shoestore
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -14,14 +13,11 @@ import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.udacity.shoestore.databinding.FragmentShoeListBinding
 import com.udacity.shoestore.datasource.AccountDataSourceImp
 import com.udacity.shoestore.models.Shoe
-import com.udacity.shoestore.models.ShoeDetail
 import com.udacity.shoestore.viewmodel.ShoeListViewModel
 import com.udacity.shoestore.viewmodel.ShoeListViewModelFactory
 
