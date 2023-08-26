@@ -81,12 +81,6 @@
             app:destination="@id/shoe_detail_screen"
             app:popUpTo="@id/shoe_detail_screen">
 
-            <argument
-                android:name="shoeDetail"
-                android:defaultValue="@null"
-                app:nullable="true"
-                app:argType="java.io.Serializable" />
-
         </action>
     </fragment>
 
@@ -95,12 +89,6 @@
         android:name="com.udacity.shoestore.ShoeDetailFragment"
         android:label="@string/shoe_detail_label"
         tools:layout="@layout/fragment_shoe_detail">
-
-        <argument
-            android:name="shoeDetail"
-            android:defaultValue="@null"
-            app:nullable="true"
-            app:argType="java.io.Serializable" />
 
     </fragment>
 

@@ -13,13 +13,11 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.udacity.shoestore.ShoeDetailFragment.Companion.DETAIL_RESULTS_KEY
-import com.udacity.shoestore.ShoeDetailFragment.Companion.REQUEST_ADD_DETAIL_KEY
-import com.udacity.shoestore.ShoeDetailFragment.Companion.REQUEST_UPDATE_DETAIL_KEY
 import com.udacity.shoestore.databinding.FragmentShoeListBinding
 import com.udacity.shoestore.datasource.AccountDataSourceImp
 import com.udacity.shoestore.models.Shoe
@@ -31,7 +29,7 @@ import com.udacity.shoestore.viewmodel.ShoeListViewModelFactory
 class ShoeListFragment : Fragment(), MenuProvider {
     private lateinit var binding: FragmentShoeListBinding
 
-    private lateinit var viewModel: ShoeListViewModel
+    val viewModel: ShoeListViewModel by activityViewModels { ShoeListViewModelFactory(AccountDataSourceImp(activity?.baseContext)) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,10 +41,6 @@ class ShoeListFragment : Fragment(), MenuProvider {
         // Add menu items without overriding methods in the Activity
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
-        val viewModelFactory = ShoeListViewModelFactory(AccountDataSourceImp(activity?.baseContext))
-        viewModel = ViewModelProvider(this, viewModelFactory)[ShoeListViewModel::class.java]
-
         observeViewModel()
         initEvents()
 
@@ -85,42 +79,6 @@ class ShoeListFragment : Fragment(), MenuProvider {
         binding.addShoeBtn.setOnClickListener {
             actionForShopDetail()
         }
-
-        // Result after update item in Shoe Detail Screen
-        setFragmentResultListener(REQUEST_UPDATE_DETAIL_KEY) { key, bundle ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getSerializable(DETAIL_RESULTS_KEY, ShoeDetail::class.java)?.let {
-                    updateShoeList(it)
-                }
-            } else {
-                (bundle.getSerializable(DETAIL_RESULTS_KEY) as ShoeDetail).let {
-                    updateShoeList(it)
-                }
-            }
-        }
-
-        // Result after add item in Shoe Detail Screen
-        setFragmentResultListener(REQUEST_ADD_DETAIL_KEY) { key, bundle ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getSerializable(DETAIL_RESULTS_KEY, ShoeDetail::class.java)?.shoe?.let {
-                    addShoeList(it)
-                }
-            } else {
-                (bundle.getSerializable(DETAIL_RESULTS_KEY) as ShoeDetail).shoe?.let {
-                    addShoeList(it)
-                }
-            }
-        }
-    }
-
-    private fun updateShoeList(shoeDetail: ShoeDetail) {
-        shoeDetail?.let {
-            viewModel.updateShoeList(it.index, it.shoe)
-        }
-    }
-
-    private fun addShoeList(shoe: Shoe) {
-        viewModel.addShoeList(shoe)
     }
 
     private fun showShoeList(list: List<Shoe>?) {
@@ -132,7 +90,7 @@ class ShoeListFragment : Fragment(), MenuProvider {
             child.findViewById<TextView>(R.id.shoe_item_company).text =
                 activity?.getString(R.string.shoe_list_item_company, shoe.company)
             child.setOnClickListener {
-                actionForShopDetail(index, shoe)
+                actionForShopDetail(index)
             }
 
             binding.shoeListContainer.addView(child)
@@ -144,9 +102,9 @@ class ShoeListFragment : Fragment(), MenuProvider {
         Navigation.findNavController(requireView()).navigate(action)
     }
 
-    private fun actionForShopDetail(index: Int? = null, shoe: Shoe? = null) {
+    private fun actionForShopDetail(index: Int = -1) {
+        viewModel.updateSelectedShoeIndex(index)
         val action = ShoeListFragmentDirections.actionShoeListScreenToShoeDetailScreen()
-        action.shoeDetail = if (index != null && shoe != null) ShoeDetail(index, shoe) else null
         Navigation.findNavController(requireView()).navigate(action)
     }
 }

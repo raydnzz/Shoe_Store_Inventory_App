@@ -11,8 +11,25 @@ class ShoeListViewModel(private val accountDataSource: AccountDataSource) : View
     private var _ShoeList: MutableLiveData<ArrayList<Shoe>?> = MutableLiveData<ArrayList<Shoe>?>()
     val shoeList: LiveData<ArrayList<Shoe>?> = _ShoeList
 
-    fun updateShoeList(index: Int, shoe: Shoe?) {
-        shoe?.let {
+    private var _SelectedShoeIndex: MutableLiveData<Int> = MutableLiveData<Int>()
+
+    fun updateSelectedShoeIndex(index: Int) {
+        _SelectedShoeIndex.value = index
+    }
+
+    fun getSelectedShoeIndex(): Int = _SelectedShoeIndex.value ?: -1
+
+    fun getSelectedShoe(): Shoe {
+        _ShoeList.value?.let {shoeList ->
+            if (_SelectedShoeIndex.value != null && _SelectedShoeIndex.value != -1) {
+                return shoeList[_SelectedShoeIndex.value!!]
+            }
+        }
+        return Shoe()
+    }
+
+    fun updateShoeList(index: Int, shoe: Shoe) {
+        shoe.let {
             _ShoeList.value?.set(index, it)
         }
     }

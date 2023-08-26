@@ -1,26 +1,21 @@
 package com.udacity.shoestore
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.udacity.shoestore.databinding.FragmentShoeDetailBinding
-import com.udacity.shoestore.models.Shoe
-import com.udacity.shoestore.models.ShoeDetail
+import com.udacity.shoestore.datasource.AccountDataSourceImp
+import com.udacity.shoestore.viewmodel.ShoeListViewModel
+import com.udacity.shoestore.viewmodel.ShoeListViewModelFactory
 
 class ShoeDetailFragment : Fragment() {
     private lateinit var binding: FragmentShoeDetailBinding
-
-    companion object {
-        val REQUEST_UPDATE_DETAIL_KEY = "REQUEST_UPDATE_DETAIL_KEY"
-        val REQUEST_ADD_DETAIL_KEY = "REQUEST_ADD_DETAIL_KEY"
-        val DETAIL_RESULTS_KEY = "DETAIL_RESULTS_KEY"
-    }
+    val viewModel: ShoeListViewModel by activityViewModels { ShoeListViewModelFactory(AccountDataSourceImp(activity?.baseContext)) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,12 +23,7 @@ class ShoeDetailFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shoe_detail, container, false)
 
-        val args = ShoeDetailFragmentArgs.fromBundle(requireArguments())
-        if (args.shoeDetail != null ) {
-            binding.shoeDetail = args.shoeDetail as ShoeDetail
-        } else {
-            binding.shoeDetail = ShoeDetail(-1, Shoe())
-        }
+        binding.shoeDetail = viewModel.getSelectedShoe()
 
         binding.saveButton.setOnClickListener {
             actionForSave()
@@ -43,10 +33,12 @@ class ShoeDetailFragment : Fragment() {
     }
 
     private fun actionForSave() {
-        if (binding.shoeDetail?.index == -1) {
-            setFragmentResult(REQUEST_ADD_DETAIL_KEY, bundleOf(DETAIL_RESULTS_KEY to binding.shoeDetail))
-        } else {
-            setFragmentResult(REQUEST_UPDATE_DETAIL_KEY, bundleOf(DETAIL_RESULTS_KEY to binding.shoeDetail))
+        binding.shoeDetail?.let {
+            if (viewModel.getSelectedShoeIndex() == -1) {
+                viewModel.addShoeList(it)
+            } else {
+                viewModel.updateShoeList(viewModel.getSelectedShoeIndex(), it)
+            }
         }
         findNavController().popBackStack(R.id.shoe_list_screen,false, true)
     }
