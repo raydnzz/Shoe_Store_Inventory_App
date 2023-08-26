@@ -3,11 +3,8 @@ package com.udacity.shoestore.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.Navigation
-import com.udacity.shoestore.ShoeListFragmentDirections
 import com.udacity.shoestore.datasource.AccountDataSource
 import com.udacity.shoestore.models.Shoe
-import com.udacity.shoestore.models.ShoeDetail
 
 class ShoeListViewModel(private val accountDataSource: AccountDataSource) : ViewModel() {
 
@@ -21,7 +18,7 @@ class ShoeListViewModel(private val accountDataSource: AccountDataSource) : View
     }
 
     fun addShoeList(shoe: Shoe) {
-        shoe?.let {
+        shoe.let {
             _ShoeList.value?.add(shoe)
         }
     }
@@ -36,7 +33,7 @@ class ShoeListViewModel(private val accountDataSource: AccountDataSource) : View
 
     private fun dummyShoeList(): ArrayList<Shoe> = arrayListOf<Shoe>().apply {
         for (i in 1..10) {
-            add(Shoe("Shoe $i", i.toDouble(), "Company $i", "description $i"))
+            add(Shoe("Shoe $i", i.toString(), "Company $i", "description $i"))
         }
     }
 }

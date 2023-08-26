@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResult
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.udacity.shoestore.databinding.FragmentShoeDetailBinding
 import com.udacity.shoestore.models.Shoe
@@ -30,9 +29,10 @@ class ShoeDetailFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shoe_detail, container, false)
 
         val args = ShoeDetailFragmentArgs.fromBundle(requireArguments())
-        args.shoeDetail?.let {
-            val shoeDetail = it as ShoeDetail
-            binding.shoeDetail = shoeDetail
+        if (args.shoeDetail != null ) {
+            binding.shoeDetail = args.shoeDetail as ShoeDetail
+        } else {
+            binding.shoeDetail = ShoeDetail(-1, Shoe())
         }
 
         binding.saveButton.setOnClickListener {
@@ -43,25 +43,12 @@ class ShoeDetailFragment : Fragment() {
     }
 
     private fun actionForSave() {
-        val shoeDetail = ShoeDetail(
-            binding.shoeDetail?.index ?: -1,
-            Shoe(
-                binding.nameEditText.text.toString(),
-                binding.sizeEditText.text.toString().toDouble(),
-                binding.companyEditText.text.toString(),
-                binding.descriptionEditText.text.toString()
-            )
-        )
-
-        if (binding.shoeDetail == null) {
-            setFragmentResult(REQUEST_ADD_DETAIL_KEY, bundleOf(DETAIL_RESULTS_KEY to shoeDetail))
+        if (binding.shoeDetail?.index == -1) {
+            setFragmentResult(REQUEST_ADD_DETAIL_KEY, bundleOf(DETAIL_RESULTS_KEY to binding.shoeDetail))
         } else {
-            setFragmentResult(REQUEST_UPDATE_DETAIL_KEY, bundleOf(DETAIL_RESULTS_KEY to shoeDetail))
+            setFragmentResult(REQUEST_UPDATE_DETAIL_KEY, bundleOf(DETAIL_RESULTS_KEY to binding.shoeDetail))
         }
         findNavController().popBackStack(R.id.shoe_list_screen,false, true)
-//
-//        val action = ShoeDetailFragmentDirections.actionShoeDetailScreenToShoeListScreen()
-//        Navigation.findNavController(requireView()).navigate(action)
     }
 
 }

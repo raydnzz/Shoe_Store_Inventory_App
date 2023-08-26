@@ -20,7 +20,7 @@
     <string name="instructions_email_label">You are logged in with email: %s</string>
     <string name="instructions_action_label">Please tap button to go to Shoe List</string>
 
-    <string name="shoe_list_item_size">Size: %f</string>
+    <string name="shoe_list_item_size">Size: %s</string>
     <string name="shoe_list_item_company">Company: %s</string>
 
     <string name="login_error">Account is incorrect!</string>
