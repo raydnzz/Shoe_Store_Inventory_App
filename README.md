@@ -6,7 +6,7 @@ This project will consist of five screens. You don't have to create a shoe store
 2. Welcome onboarding screen
 3. Instructions onboarding screen
 4. Shoe Listing screen
-5. Shoe Detail screen for adding a new shoe
+5. Shoe Detail screen for adding a new shoe1
 
 ## Getting Started
 
