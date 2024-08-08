@@ -10,6 +10,7 @@ This project will consist of five screens. You don't have to create a shoe store
 6. This is master
 7. Conflict master
 8. Conflict feature_a
+9. test same content
 
 ## Getting Started
 
