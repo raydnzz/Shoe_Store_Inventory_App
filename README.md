@@ -12,9 +12,10 @@ This project will consist of five screens. You don't have to create a shoe store
 8. Conflict feature_a
 9. test same content
 10. demo branch a -> c, and a, c -> master
+11. this feature_a
 
 ## Getting Started
-
+## hehe
 Open the starter project in the latest stable version of Android Studio.
 
 Open the starter project in Android Studio
