@@ -11,6 +11,7 @@ This project will consist of five screens. You don't have to create a shoe store
 7. Conflict master
 8. Conflict feature_a
 9. test same content
+10. demo branch a -> c, and a, c -> master
 
 ## Getting Started
 
