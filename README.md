@@ -17,7 +17,8 @@ This project will consist of five screens. You don't have to create a shoe store
 13. feature_a ne
 
 ## Getting Started
-## hehe
+## hehe2222
+## feature_c
 Open the starter project in the latest stable version of Android Studio.
 
 Open the starter project in Android Studio
